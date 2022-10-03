@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Thought, User } = require('../../models')
 
-const thoughtController = {
+const {
     getAllThoughts,
     getThoughtById,
     createThought,
