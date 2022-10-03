@@ -1,9 +1,35 @@
-const { Thought } = require("../models");
+const { Thought, User } = require("../models");
 
 const thoughtController = {
-  getAllThoughts() {},
-  getThoughtById() {},
-  
+  getAllThoughts(req, res) {
+    Thought.find({})
+      .populate({
+        path: "user",
+        select: "-__v",
+      })
+      .select("-__v")
+      .sort({ _id: -1 })
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
+
+  getThoughtById({ params }, res) {
+    Thought.findOne({ _id: params.id })
+      .populate({
+        path: "user",
+        select: "-__v",
+      })
+      .select("-__v")
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
+
   createThought({ params, body }, res) {
     console.log(body);
     Thought.create(body)
@@ -11,7 +37,7 @@ const thoughtController = {
         console.log(_id);
         return User.findOneAndUpdate(
           { _id: params.UserId },
-          { $push: { Thoughts: _id } },
+          { $push: { thoughts: _id } },
           { new: true }
         );
       })
@@ -24,7 +50,7 @@ const thoughtController = {
       })
       .catch((err) => res.json(err));
   },
-  
+
   updateThought() {},
   deleteThought() {},
   createReaction() {},
