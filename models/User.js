@@ -7,7 +7,7 @@ var validateEmail = function (email) {
 
 const UserSchema = new Schema(
   {
-    userName: {
+    username: {
       type: String,
       unique: true,
       required: "A Username is required",
@@ -30,26 +30,22 @@ const UserSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Thought"
     },
-    friends: {
+    friends:[ {
       //array of _id values referencing USER model
       type: Schema.Types.ObjectId,
       ref: "User"
-    },
+    }],
   },
   {
     toJSON: {
       virtuals: true,
-      getters: true,
     },
     id: false,
   }
 );
 
 UserSchema.virtual("friendCount").get(function () {
-  return this.friends.reduce(
-    (total, friends) => total + friends.length + 1,
-    0
-  );
+  return this.friends.length + 1
 });
 
 const User = model("User", UserSchema);
