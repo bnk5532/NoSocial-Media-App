@@ -17,13 +17,17 @@ const thoughtController = {
   },
 
   getThoughtById({ params }, res) {
-    Thought.findOne({ _id: params.id })
+    console.log("thought by id")
+    console.log(params)
+    Thought.findOne({ _id: params.thoughtId})
       .populate({
         path: "reactions",
         select: "-__v",
       })
       .select("-__v")
-      .then((dbThoughtData) => res.json(dbThoughtData))
+      .then((dbThoughtData) => {
+        console.log(dbThoughtData)
+        res.json(dbThoughtData)})
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
