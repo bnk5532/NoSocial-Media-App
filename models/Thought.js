@@ -13,7 +13,7 @@ const ReactionsSchema = new Schema (
         required: "This field requires input to log your reaction!",
         maxlength: 280
     },
-    userName: {
+    username: {
         type: String,
         required: "A Username is required",
         trim: true
@@ -46,7 +46,7 @@ const ThoughtSchema = new Schema(
       default: Date.now,
       get: (createdAtVal) => dateFormat(createdAtVal),
     },
-    userName: {
+    username: {
       type: String,
       required: "A Username must be associated with this thought!",
       trim: true
