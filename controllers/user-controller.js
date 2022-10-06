@@ -52,7 +52,7 @@ const userController = {
           res.status(404).json({ message: "No User found with id!" });
           return;
         }
-        es.json(dbUserData);
+        res.json(dbUserData);
       })
       .catch((err) => res.status(400).json(err));
   },
